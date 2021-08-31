@@ -8,6 +8,15 @@
 					for="file"
 					class="group bg-black bg-opacity-20 hover:bg-opacity-30 hover:border-opacity-30 flex justify-center px-6 pt-5 pb-6 border-2 border-black border-opacity-20 border-dashed rounded-lg cursor-pointer focus-within:outline-none focus-within:border-opacity-30 focus-within:bg-opacity-30 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-sky-400 focus-within:ring-white focus-within:ring-opacity-50"
 				>
+					<input
+						id="file"
+						name="file"
+						type="file"
+						accept="video/*"
+						class="opacity-0 top-0 absolute w-full h-full cursor-pointer"
+						@input="getFile"
+						tabindex="-1"
+					/>
 					<div class="space-y-1 text-center">
 						<svg
 							class="mx-auto h-12 w-12 text-white"
@@ -25,10 +34,18 @@
 						</svg>
 						<div class="flex text-sm text-sky-50">
 							<span class="font-medium text-white">Upload a video</span>
-							<input id="file" name="file" type="file" class="sr-only" @change="getFile" />
+							<input
+								id="file"
+								name="file"
+								type="file"
+								accept="video/*"
+								class="sr-only"
+								@input="getFile"
+								tabindex="0"
+							/>
 							<p class="pl-1">or drag and drop</p>
 						</div>
-						<p class="text-xs text-sky-100">AVI, MP4, WEBM, MKV</p>
+						<p class="text-xs text-sky-100">AVI, MP4, WEBM, MKV, upto 2GB</p>
 					</div>
 				</label>
 			</div>
