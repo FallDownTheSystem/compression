@@ -150,7 +150,7 @@ const ffmpeg = createFFmpeg({ log: true, progress: p => NProgress.set(p.ratio) }
 let file = $ref(null);
 let blobUrl = $ref(null);
 
-const qualities = [{ name: 'High', crf: 18 }, { name: 'Medium', crf: 23 }, { name: 'Low', crf: 28 },]
+const qualities = [{ name: 'High', mp4: 18, webm: 24, }, { name: 'Medium', mp4: 23, webm: 29 }, { name: 'Low', mp4: 28, webm: 32 },]
 let quality = $ref(qualities[1]);
 let transcodeInProgress = $ref(false)
 let webmEncoder = $ref(false)
@@ -203,14 +203,23 @@ const transcode = async () => {
 
 		ffmpeg.FS('writeFile', file.name, await fetchFile(file));
 
-		let outputFormat = webmEncoder ? 'webm' : 'mp4';
-
-		await ffmpeg.run(
-			'-i', file.name,
-			'-c:v', webmEncoder ? 'libvpx' : 'libx264',
-			'-crf', (quality.crf + (webmEncoder ? 5 : 0)).toString(),
-			`output.${outputFormat}`
-		);
+		const outputFormat = webmEncoder ? 'webm' : 'mp4';
+		if (webmEncoder) {
+			await ffmpeg.run(
+				'-i', file.name,
+				'-c:v', 'libvpx-vp9',
+				'-crf', quality.webm.toString(),
+				'-b:v', '0',
+				`output.${outputFormat}`
+			);
+		} else {
+			await ffmpeg.run(
+				'-i', file.name,
+				'-c:v', 'libx264',
+				'-crf', quality.mp4.toString(),
+				`output.${outputFormat}`
+			);
+		}
 
 		const data = ffmpeg.FS('readFile', `output.${outputFormat}`);
 		blobUrl = URL.createObjectURL(new Blob([data.buffer], { type: `video/${outputFormat}` }));
@@ -232,6 +241,7 @@ const transcode = async () => {
 }
 
 const download = () => {
+	const outputFormat = webmEncoder ? 'webm' : 'mp4';
 	const anchor = document.createElement('a');
 	anchor.href = blobUrl;
 	anchor.target = "_blank";
@@ -242,7 +252,6 @@ const download = () => {
 }
 
 watchEffect(() => {
-	// Stop the playback in the video element
 	if (previewTranscoded) {
 		const video = document.getElementById('source-preview');
 		if (video) {
