@@ -227,6 +227,7 @@ const transcode = async () => {
 				'-c:v', 'libvpx-vp9',
 				'-crf', quality.webm.toString(),
 				'-b:v', '0',
+				'-row-mt', '1',
 				`output.${outputFormat}`
 			);
 		} else {
