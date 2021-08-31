@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#app,
+main {
+	min-height: 100vh;
+	width: 100%;
+}
+
+#nprogress {
+	pointer-events: none;
+}
+#nprogress .bar {
+	@apply bg-white bg-opacity-60 w-full h-[5px] inset-0 z-50 shadow;
+}

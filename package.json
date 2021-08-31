@@ -1,0 +1,26 @@
+{
+  "name": "compress",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@ffmpeg/core": "^0.10.0",
+    "@ffmpeg/ffmpeg": "^0.10.1",
+    "@headlessui/vue": "^1.4.1",
+    "nprogress": "^0.2.0",
+    "vue": "^3.2.6"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.3.3",
+    "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/compiler-sfc": "^3.2.6",
+    "autoprefixer": "^10.3.3",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.9",
+    "vite": "^2.5.2",
+    "vite-plugin-cross-origin-isolation": "^0.1.1"
+  }
+}
